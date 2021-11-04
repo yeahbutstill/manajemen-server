@@ -105,6 +105,7 @@ public class ServerResource {
 
     @GetMapping(path = "/image/{fileName}", produces = IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName") String fileName) throws IOException {
+        // ("user.home") + "Downloads/images/" + fileName
         return Files.readAllBytes(Paths.get(System.getProperty("resources.images") + "server/png/" + fileName));
     }
 
