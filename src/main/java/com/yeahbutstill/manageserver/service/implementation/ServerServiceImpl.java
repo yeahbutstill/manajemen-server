@@ -12,6 +12,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.Collection;
 import java.util.Random;
 
@@ -46,6 +48,17 @@ public class ServerServiceImpl implements ServerService {
         server.setStatus(inetAddress.isReachable(10000) ? Status.SERVER_UP : Status.SERVER_DOWN);
         serverRepo.save(server);
         return server;
+    }
+
+    private boolean isReachable(String ipAddress, int port, int timeOut) {
+        try {
+            try (Socket socket = new Socket()) {
+                socket.connect(new InetSocketAddress(ipAddress, port), timeOut);
+            }
+            return true;
+        } catch (IOException exception) {
+            return false;
+        }
     }
 
     @Override
