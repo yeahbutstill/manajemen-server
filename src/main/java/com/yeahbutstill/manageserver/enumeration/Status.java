@@ -1,6 +1,7 @@
 package com.yeahbutstill.manageserver.enumeration;
 
 public enum Status {
+
     SERVER_UP("SERVER_UP"),
     SERVER_DOWN("SERVER_DOWN");
 
@@ -13,4 +14,5 @@ public enum Status {
     public String getStatus() {
         return status;
     }
+
 }

@@ -7,11 +7,13 @@ import com.yeahbutstill.manageserver.service.ServerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Collection;
+import java.util.Random;
 
 import static java.lang.Boolean.TRUE;
 import static org.springframework.data.domain.PageRequest.of;
@@ -32,7 +34,8 @@ public class ServerServiceImpl implements ServerService {
     }
 
     private String setServerImageUrl() {
-        return null;
+        String[] imageName = { "server-1.png", "server-2.png", "server-3.png", "server-4.png"};
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/server/image/" + imageName[new Random().nextInt(4)]).toUriString();
     }
 
     @Override
@@ -69,4 +72,5 @@ public class ServerServiceImpl implements ServerService {
         serverRepo.deleteById(id);
         return TRUE;
     }
+
 }
