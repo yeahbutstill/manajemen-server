@@ -4,7 +4,7 @@
 
 * Run MySQL di docker
     ```bashpro shell script
-  docker run --rm \       
+  sudo docker run --rm \
   --name=server-db \
   -e MYSQL_DATABASE=serverdb \
   -e MYSQL_ROOT_PASSWORD=PNSJkxXvVNDAhePMuExTBuRR \
