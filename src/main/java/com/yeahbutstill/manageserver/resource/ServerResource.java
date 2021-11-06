@@ -11,10 +11,9 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.Collections;
 
 import static com.yeahbutstill.manageserver.enumeration.Status.SERVER_UP;
-import static java.lang.String.valueOf;
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -32,9 +31,10 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(new HashMap<String, String>() {{
-                            put("servers", valueOf(serverService.listServers(30)));
-                        }})
+//                        .data(new HashMap<String, String>() {{
+//                            put("servers", valueOf(serverService.listServers(30)));
+//                        }})
+                        .data(Collections.singletonMap("servers", serverService.listServers(30)))
                         .message("Servers retrieved")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -48,9 +48,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(new HashMap<String, String>() {{
-                            put("server", valueOf(server));
-                        }})
+                        .data(Collections.singletonMap("server", server))
                         .message(server.getStatus() == SERVER_UP ? "Ping success" : "Ping failed")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -63,9 +61,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(new HashMap<String, String>() {{
-                            put("server", valueOf(serverService.create(server)));
-                        }})
+                        .data(Collections.singletonMap("server", serverService.create(server)))
                         .message("Server created")
                         .httpStatus(CREATED)
                         .statusCode(CREATED.value())
@@ -78,9 +74,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(new HashMap<String, String>() {{
-                            put("server", valueOf(serverService.get(id)));
-                        }})
+                        .data(Collections.singletonMap("server", serverService.get(id)))
                         .message("Server retrieved")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -93,9 +87,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(new HashMap<String, String>() {{
-                            put("deleted", valueOf(serverService.delete(id)));
-                        }})
+                        .data(Collections.singletonMap("deleted", serverService.delete(id)))
                         .message("Server deleted")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -105,8 +97,7 @@ public class ServerResource {
 
     @GetMapping(path = "/image/{fileName}", produces = IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName") String fileName) throws IOException {
-        // ("user.home") + "Downloads/images/" + fileName
-        return Files.readAllBytes(Paths.get(System.getProperty("resources.images") + "server/png/" + fileName));
+        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/Downloads/images/" + fileName));
     }
 
 }

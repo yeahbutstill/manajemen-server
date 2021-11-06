@@ -7,6 +7,8 @@
   sudo docker run --rm \
   --name=server-db \
   -e MYSQL_DATABASE=serverdb \
+  -e MYSQL_USER=servermanager \
+  -e MYSQL_PASSWORD=PNSJkxXvVNDAhePMuExTBuRR \
   -e MYSQL_ROOT_PASSWORD=PNSJkxXvVNDAhePMuExTBuRR \
   -e TZ=Asia/Jakarta \
   -p 6603:3306 \
