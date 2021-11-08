@@ -17,6 +17,8 @@ import java.net.Socket;
 import java.util.Collection;
 import java.util.Random;
 
+import static com.yeahbutstill.manageserver.enumeration.Status.SERVER_DOWN;
+import static com.yeahbutstill.manageserver.enumeration.Status.SERVER_UP;
 import static java.lang.Boolean.TRUE;
 import static org.springframework.data.domain.PageRequest.of;
 
@@ -45,12 +47,12 @@ public class ServerServiceImpl implements ServerService {
         log.info("Pinging server IP: {}", ipAddress);
         Server server = serverRepo.findByIpAddress(ipAddress);
         InetAddress inetAddress = InetAddress.getByName(ipAddress);
-        server.setStatus(inetAddress.isReachable(10000) ? Status.SERVER_UP : Status.SERVER_DOWN);
+        server.setStatus(inetAddress.isReachable(10000) ? SERVER_UP : SERVER_DOWN);
         serverRepo.save(server);
         return server;
     }
 
-    private boolean isReachable(String ipAddress, int port, int timeOut) {
+    private boolean isReachables(String ipAddress, int port, int timeOut) {
         try {
             try (Socket socket = new Socket()) {
                 socket.connect(new InetSocketAddress(ipAddress, port), timeOut);
@@ -70,18 +72,18 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public Server get(Long id) {
         log.info("Fetching server by id: {}", id);
-        return serverRepo.findById(id).get();
+        return serverRepo.findById(id).orElse(null);
     }
 
     @Override
     public Server update(Server server) {
-        log.info("U pdating server: {}", server.getName());
+        log.info("Updating server: {}", server.getName());
         return serverRepo.save(server);
     }
 
     @Override
     public Boolean delete(Long id) {
-        log.info("Deleting server by id: {}", id);
+        log.info("Deleting server by ID: {}", id);
         serverRepo.deleteById(id);
         return TRUE;
     }

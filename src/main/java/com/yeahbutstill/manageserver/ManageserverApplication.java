@@ -1,6 +1,5 @@
 package com.yeahbutstill.manageserver;
 
-import com.yeahbutstill.manageserver.enumeration.Status;
 import com.yeahbutstill.manageserver.model.Server;
 import com.yeahbutstill.manageserver.repo.ServerRepo;
 import org.springframework.boot.CommandLineRunner;
@@ -28,7 +27,7 @@ public class ManageserverApplication {
 					"16 GB",
 					"Personal PC",
 					"http://localhost:8080/server/image/server-1.png",
-					SERVER_DOWN
+					SERVER_UP
 			));
 			serverRepo.save(new Server(
 					null,
@@ -55,7 +54,7 @@ public class ManageserverApplication {
 					"64 GB",
 					"Mail Server",
 					"http://localhost:8080/server/image/server-4.png",
-					SERVER_UP
+					SERVER_DOWN
 			));
 		};
 	}

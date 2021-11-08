@@ -31,9 +31,6 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-//                        .data(new HashMap<String, String>() {{
-//                            put("servers", valueOf(serverService.listServers(30)));
-//                        }})
                         .data(Collections.singletonMap("servers", serverService.listServers(30)))
                         .message("Servers retrieved")
                         .httpStatus(OK)
