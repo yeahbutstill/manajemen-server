@@ -15,6 +15,7 @@ import java.util.Collections;
 
 import static com.yeahbutstill.manageserver.enumeration.Status.SERVER_UP;
 import static java.time.LocalDateTime.now;
+import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
@@ -31,7 +32,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(Collections.singletonMap("servers", serverService.listServers(30)))
+                        .data(singletonMap("servers", serverService.listServers(30)))
                         .message("Servers retrieved")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -45,7 +46,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(Collections.singletonMap("server", server))
+                        .data(singletonMap("server", server))
                         .message(server.getStatus() == SERVER_UP ? "Ping success" : "Ping failed")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -58,7 +59,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(Collections.singletonMap("server", serverService.create(server)))
+                        .data(singletonMap("server", serverService.create(server)))
                         .message("Server created")
                         .httpStatus(CREATED)
                         .statusCode(CREATED.value())
@@ -71,7 +72,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(Collections.singletonMap("server", serverService.get(id)))
+                        .data(singletonMap("server", serverService.get(id)))
                         .message("Server retrieved")
                         .httpStatus(OK)
                         .statusCode(OK.value())
@@ -84,7 +85,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .localDateTime(now())
-                        .data(Collections.singletonMap("deleted", serverService.delete(id)))
+                        .data(singletonMap("deleted", serverService.delete(id)))
                         .message("Server deleted")
                         .httpStatus(OK)
                         .statusCode(OK.value())

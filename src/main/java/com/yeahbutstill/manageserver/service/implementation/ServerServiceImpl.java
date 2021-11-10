@@ -1,6 +1,5 @@
 package com.yeahbutstill.manageserver.service.implementation;
 
-import com.yeahbutstill.manageserver.enumeration.Status;
 import com.yeahbutstill.manageserver.model.Server;
 import com.yeahbutstill.manageserver.repo.ServerRepo;
 import com.yeahbutstill.manageserver.service.ServerService;
@@ -37,11 +36,6 @@ public class ServerServiceImpl implements ServerService {
         return serverRepo.save(server);
     }
 
-    private String setServerImageUrl() {
-        String[] imageName = { "server-1.png", "server-2.png", "server-3.png", "server-4.png"};
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/server/image/" + imageName[new Random().nextInt(4)]).toUriString();
-    }
-
     @Override
     public Server ping(String ipAddress) throws IOException {
         log.info("Pinging server IP: {}", ipAddress);
@@ -52,17 +46,6 @@ public class ServerServiceImpl implements ServerService {
         return server;
     }
 
-    private boolean isReachables(String ipAddress, int port, int timeOut) {
-        try {
-            try (Socket socket = new Socket()) {
-                socket.connect(new InetSocketAddress(ipAddress, port), timeOut);
-            }
-            return true;
-        } catch (IOException exception) {
-            return false;
-        }
-    }
-
     @Override
     public Collection<Server> listServers(int limit) {
         log.info("Fetching all server");
@@ -71,7 +54,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public Server get(Long id) {
-        log.info("Fetching server by id: {}", id);
+        log.info("Fetching server by ID: {}", id);
         return serverRepo.findById(id).orElse(null);
     }
 
@@ -86,6 +69,22 @@ public class ServerServiceImpl implements ServerService {
         log.info("Deleting server by ID: {}", id);
         serverRepo.deleteById(id);
         return TRUE;
+    }
+
+    private String setServerImageUrl() {
+        String[] imageName = { "server-1.png", "server-2.png", "server-3.png", "server-4.png"};
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/server/image/" + imageName[new Random().nextInt(4)]).toUriString();
+    }
+
+    private boolean isReachables(String ipAddress, int port, int timeOut) {
+        try {
+            try (Socket socket = new Socket()) {
+                socket.connect(new InetSocketAddress(ipAddress, port), timeOut);
+            }
+            return true;
+        } catch (IOException exception) {
+            return false;
+        }
     }
 
 }
